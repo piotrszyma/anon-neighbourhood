@@ -1,4 +1,4 @@
-# anon-neighbour
+# anon-neighbourhood
 
 ## Project setup
 ```
