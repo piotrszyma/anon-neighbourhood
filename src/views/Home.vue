@@ -9,8 +9,9 @@
 </template>
 <script>
 import InlineInput from '../components/InlineInput.vue'
-import storageService from '../services/storageService';
+import storageService from '../services/storageService'
 import consts from '../consts';
+import locationService from '../services/locationService.js'
 
 const ANON_NICKNAME_KEY = 'anonNickname';
 

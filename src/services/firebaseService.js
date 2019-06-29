@@ -1,3 +1,11 @@
+function performCommunication (numberOfRetries, func, ...args) {
+    try {
+        func(...args)
+    } catch(error) {
+
+    }
+}
+
 function sendPartialSet (whoseSet, whoSet, set) {
     body = {}
     body['set'] = set // TODO: check the name
@@ -15,6 +23,19 @@ function sendFullSet (whoseSet, whoSet, set) {
     // TODO: do stuff depending on the reponse 
 }
 
+function getPartialSet (whoseSet, whoSet) {
+    const url = `https://anon-neighbour.firebaseio.com/positions/${whoseSet}/${whoSet}.json`
+    const response = getSet(url, body)
+    // TODO: do stuff depending on the reponse 
+    return reponse
+}
+
+function getFullSet (whoseSet, whoSet) {
+    const url = `https://anon-neighbour.firebaseio.com/partial-positions/${whoseSet}/${whoSet}.json`
+    const response = getSet(url, body);
+    return response 
+}
+
 function sendSet (url, body) {
     const data = {
         method: 'POST',
@@ -28,5 +49,7 @@ function sendSet (url, body) {
 }
 
 function getSet () {
-
+    const response = await fetch(url)
+    // TODO: unpack values?? 
+    return reponse 
 }

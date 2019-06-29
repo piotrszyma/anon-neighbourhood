@@ -16,35 +16,10 @@ function computeCoordinates (latitude, longitude) {
   return coordinates
 }
 
-function isNeighbourhood (yourSet, anonSet) {
+function isNeighbourhood () {
+  const yourSet = storageService.get(consts.anonSetStorageKey)
+  const anonSet = storageService.get(consts.yourSetStorageKey)
   return cryptoService.checkNumberOfMutualPoints(yourSet, anonSet) > 0
 }
-
-// async function getLocation (nickname) {
-//   const url = ''
-
-//   const data = {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json'
-//     }
-//   }
-//   const params = { nickname: nickname }
-//   Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
-
-//   const response = await fetch(url, data)
-
-//   if (response.status === Response.ok) {
-//     return response.body['location']
-//   } else {
-
-//   }
-//   // fetch(url).then(/* … */)
-// }
-
-// async function setOwnLocation (latitude, longitude) {
-//   const body = computeCoordinates(latitude, longitude)
-//   body['nickName'] = consts.YourNicknameStorageKey
-// }
 
 export default { computeCoordinates, isNeighbourhood }
