@@ -36,6 +36,7 @@ export default {
   methods: {
     async updateLocation() {
       try {
+        // TODO(szyma): Change after development is done.
         const latitude = "51.11"
         const   longitude = "17.03"
         // const { latitude, longitude } = await browserService.getLocation();
