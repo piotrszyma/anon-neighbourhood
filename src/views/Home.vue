@@ -4,6 +4,7 @@
     <div class="form">
       <inline-input v-model="anonNickname" label="Anon's nickname:" />
     </div>
+    <button @click="handleCheckNeighbourhood">Check neighbourhood</button>
   </div>
 </template>
 <script>
@@ -26,6 +27,15 @@ export default {
   watch: {
     anonNickname(newValue) {
       storageService.set(consts.AnonNicknameStorageKey, newValue);
+    }
+  },
+  methods: {
+    handleCheckNeighbourhood() {
+      this.$notify({
+        group: 'main',
+        text: 'Checking neighbourhood...',
+        timeout: 1000,
+      });
     }
   }
 }
@@ -50,6 +60,18 @@ export default {
       -webkit-font-smoothing: antialiased;
       box-shadow: 10px 10px 45px -10px rgba(0,0,0,0.31);
       background: none;
+    }
+
+    button {
+      cursor: pointer;
+      margin-top: 60px;
+      padding: 20px 40px;
+      font-size: 1rem;
+      border-radius: 31px;
+      border: 0px;
+      background-color: #62c397;
+      color: white;
+      box-shadow: 10px 10px 45px -10px rgba(0,0,0,0.31);
     }
   }
 
