@@ -63,11 +63,15 @@ export default {
     },
 
     canCheckNeighbourhood() {
-      return [
+      const requiredStorageItems = [
         consts.anonNicknameStorageKey,
         consts.yourNicknameStorageKey,
         consts.yourSetStorageKey,
-      ].map(storageService.get).every();
+      ].map(storageService.get);
+      for (const item of requiredStorageItems) {
+        if (!item) return false;
+      }
+      return true;
     }
   }
 }
