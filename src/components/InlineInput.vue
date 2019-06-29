@@ -2,7 +2,7 @@
   <div class="input">
     <p>{{ label }}</p>
     <input :value="value" @input="handleInput"/>
-    <button>OK</button>
+    <button @click="handleOk">OK</button>
   </div>
 </template>
 <script>
@@ -14,6 +14,9 @@ export default {
   methods: {
     handleInput (event) {
       this.$emit('input', event.target.value)
+    },
+    handleOk (event) {
+      this.$emit('submit')
     }
   }
 }
