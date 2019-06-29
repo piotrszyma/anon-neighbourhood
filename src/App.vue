@@ -5,9 +5,11 @@
       <router-link to="/setup">Setup</router-link>
       <router-link to="/settings">Settings</router-link>
     </div>
-    <keep-alive>
-      <router-view/>
-    </keep-alive>
+    <transition name="fade">
+      <keep-alive>
+        <router-view/>
+      </keep-alive>
+    </transition>
   </div>
 </template>
 

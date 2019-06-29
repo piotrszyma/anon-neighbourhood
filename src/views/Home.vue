@@ -8,6 +8,10 @@
 </template>
 <script>
 import InlineInput from '../components/InlineInput.vue'
+import storageService from '../services/storageService';
+import consts from '../consts';
+
+const ANON_NICKNAME_KEY = 'anonNickname';
 
 export default {
   name: 'home',
@@ -16,7 +20,12 @@ export default {
   },
   data: function () {
     return {
-      anonNickname: ''
+      anonNickname: storageService.get(consts.AnonNicknameStorageKey) || ''
+    }
+  },
+  watch: {
+    anonNickname(newValue) {
+      storageService.set(consts.AnonNicknameStorageKey, newValue);
     }
   }
 }

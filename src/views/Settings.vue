@@ -13,6 +13,7 @@
   </div>
 </template>
 <script>
+import browserService from '../services/browserService.js';
 import InlineInput from '../components/InlineInput.vue'
 import { getLocation, setOwnLocation } from '../services/locationService.js'
 
@@ -20,6 +21,17 @@ export default {
   name: 'settings',
   components: {
     InlineInput
+  },
+  async created() {
+    try {
+      const { latitude, longitude } = await browserService.getLocation();
+      alert(`
+        Longitude: ${latitude}
+        Latitude: ${longitude}
+      `);
+    } catch (error) {
+      alert(error);
+    }
   },
   methods: {
     update() {
@@ -47,4 +59,3 @@ export default {
     text-align: center;
   }
 </style>
-
