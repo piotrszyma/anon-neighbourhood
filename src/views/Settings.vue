@@ -19,6 +19,8 @@ import { getLocation, setOwnLocation } from '../services/locationService.js'
 import storageService from '../services/storageService';
 import consts from '../consts';
 import locationService from '../services/locationService.js'
+import cryptoService from '../services/cryptoService.js'
+
 
 export default {
   name: 'settings',
@@ -27,24 +29,22 @@ export default {
   },
   data: function() {
     return {
-      longitude: "0",
-      latitude: "0",
-      useRealValues: storageService.get(consts.useRealValuesStorageKey) || true,
+      longitude: storageService.get(consts.yourLongitudeStorageKey) || "0",
+      latitude: storageService.get(consts.yourLatitudeStorageKey) || "0",
+      useRealValues: Boolean(storageService.get(consts.useRealValuesStorageKey)),
       locationUpdater: () => {}
     }
   },
   methods: {
     async updateLocation() {
       try {
-        // TODO(szyma): Change after development is done.
-        const latitude = "51.11"
-        const   longitude = "17.03"
-        // const { latitude, longitude } = await browserService.getLocation();
+        const { latitude, longitude } = await browserService.getLocation();
         this.longitude = longitude;
         this.latitude = latitude;
-        // storageService.set(consts.yourLatitudeStorageKey, latitude);
-        // storageService.set(consts.yourLongitudeStorageKey, longitude);
+        storageService.set(consts.yourLatitudeStorageKey, latitude);
+        storageService.set(consts.yourLongitudeStorageKey, longitude);
         storageService.set(consts.yourSetStorageKey, locationService.computeCoordinates(latitude, longitude));
+        cryptoService.updateYourPartialSet();
       } catch (error) {
         console.error(error);
         this.$notify({
@@ -77,7 +77,6 @@ export default {
     useRealValues: {
       immediate: true,
       handler (shouldUseNow, wasUsingEarlier) {
-        console.log('Location updater setting changed into: ', shouldUseNow);
         storageService.set(consts.useRealValuesStorageKey, shouldUseNow);
         if (shouldUseNow && !wasUsingEarlier) {
           this.startLocationUpdater();
@@ -85,7 +84,19 @@ export default {
           this.stopLocationUpdater();
         }
       }
-    }
+    },
+    longitude(newLongitude) {
+        if(newLongitude === '') return;
+        storageService.set(consts.yourSetStorageKey, locationService.computeCoordinates(this.latitude, newLongitude));
+        storageService.set(consts.yourLongitudeStorageKey, newLongitude)
+        cryptoService.updateYourPartialSet();
+    },
+    latitude(newLatitude) {
+        if(newLatitude === '') return;
+        storageService.set(consts.yourSetStorageKey, locationService.computeCoordinates(newLatitude, this.longitude));
+        storageService.set(consts.yourLatitudeStorageKey, newLatitude)
+        cryptoService.updateYourPartialSet();
+    },
   }
 }
 </script>

@@ -5,6 +5,7 @@
       <inline-input v-model="anonNickname" label="Anon's nickname:" />
     </div>
     <button :class="disabled ? 'disabled' : ''" @click="handleCheckNeighbourhood">Check neighbourhood</button>
+    <p style="font-size: 10px;" v-for="element, id in storageContent" :key="id"> {{element}} </p>
   </div>
 </template>
 <script>
@@ -12,6 +13,7 @@ import InlineInput from '../components/InlineInput.vue'
 import storageService from '../services/storageService'
 import consts from '../consts';
 import locationService from '../services/locationService.js'
+import cryptoService from '../services/cryptoService.js'
 
 const ANON_NICKNAME_KEY = 'anonNickname';
 
@@ -24,7 +26,13 @@ export default {
     return {
       anonNickname: storageService.get(consts.anonNicknameStorageKey) || '',
       disabled: false,
+      storageContent: [],
     }
+  },
+  created () {
+    setInterval(() => {
+      cryptoService.updateAnonFullSet();
+    }, 1000);
   },
   watch: {
     anonNickname(newValue) {
@@ -32,7 +40,9 @@ export default {
     }
   },
   methods: {
-    handleCheckNeighbourhood() {
+    async handleCheckNeighbourhood() {
+      this.storageContent = Object.values(consts).map(key =>
+          key + ': ' + JSON.stringify(storageService.get(key)));
       if (!this.canCheckNeighbourhood()) {
         this.$notify({
             group: 'main',
@@ -49,17 +59,26 @@ export default {
         timeout: 1000,
       });
 
-      const isInNeighbourhood = false;
-
-      setTimeout(() => {
+      try {
+        const isInNeighbourhood = await locationService.isNeighbourhood();
+        this.$notify({
+          group: 'main',
+          type: isInNeighbourhood ? 'success' : 'error',
+          text: isInNeighbourhood ? 'You are in neighbourhood with anon' : 'You are not in neighbourhood with anon',
+          timeout: 5000,
+        })
+      } catch (error) {
+          console.error(error);
           this.$notify({
             group: 'main',
-            type: isInNeighbourhood ? 'success' : 'error',
-            text: isInNeighbourhood ? 'You are in neighbourhood with anon' : 'You are not in neighbourhood with anon',
+            type:'error',
+            text: error,
             timeout: 5000,
           })
           this.disabled = false;
-      }, 5000);
+          return;
+      }
+      this.disabled = false;
     },
 
     canCheckNeighbourhood() {

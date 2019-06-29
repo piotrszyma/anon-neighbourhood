@@ -3,7 +3,7 @@ export default {
   anonNicknameStorageKey: 'anonNickname',
   useRealValuesStorageKey: 'useReal',
   yourLatitudeStorageKey: 'yourLatitudeStorageKey',
-  yourLongitudeStorageKey: 'yourLatitudeStorageKey',
+  yourLongitudeStorageKey: 'yourLongitudeStorageKey',
   yourSetStorageKey: 'yourSet',
   anonSetStorageKey: 'anonSet',
   yourEphemeralValueStorageKey: 'yourEphemeralValue'
