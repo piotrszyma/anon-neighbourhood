@@ -1,3 +1,6 @@
+import storageService from "./storageService";
+import consts from '../consts';
+
 function performCommunication (numberOfRetries, func, ...args) {
     try {
         func(...args)
@@ -7,6 +10,9 @@ function performCommunication (numberOfRetries, func, ...args) {
 }
 
 function sendPartialSet (whoseSet, whoSet, set) {
+    // const whoseSet = storageService(consts.yourNicknameStorageKey)
+    // const whoSet = storageService(consts.anonNicknameStorageKey)
+    // const set = storageService(consts.yourSetStorageKey)
     body = {}
     body['set'] = set // TODO: check the name
     const url = `https://anon-neighbour.firebaseio.com/positions/${whoseSet}/${whoSet}.json`
@@ -15,6 +21,9 @@ function sendPartialSet (whoseSet, whoSet, set) {
 }
 
 function sendFullSet (whoseSet, whoSet, set) {
+    // const whoseSet = storageService(consts.anonNicknameStorageKey)
+    // const whoSet = storageService(consts.yourNicknameStorageKey)
+    // const set = storageService(consts.anonSetStorageKey)
     body = {}
     body['set'] = set // TODO: check the name
     const url = `https://anon-neighbour.firebaseio.com/partial-positions/${whoseSet}/${whoSet}.json`
@@ -36,7 +45,7 @@ function getFullSet (whoseSet, whoSet) {
     return response 
 }
 
-function sendSet (url, body) {
+async function sendSet (url, body) {
     const data = {
         method: 'POST',
         headers: {
@@ -48,8 +57,11 @@ function sendSet (url, body) {
     return reponse 
 }
 
-function getSet () {
+async function getSet () {
     const response = await fetch(url)
     // TODO: unpack values?? 
     return reponse 
 }
+
+
+export default { sendFullSet, sendPartialSet, getFullSet, getPartialSet }

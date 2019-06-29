@@ -5,5 +5,6 @@ export default {
   yourLatitudeStorageKey: 'yourLatitudeStorageKey',
   yourLongitudeStorageKey: 'yourLatitudeStorageKey',
   yourSetStorageKey: 'yourSet',
-  anonSetStorageKey: 'anonSet'
+  anonSetStorageKey: 'anonSet',
+  yourEphemeralValueStorageKey: 'yourEphemeralValue'
 }
