@@ -64,8 +64,9 @@ export default {
 
     button {
       cursor: pointer;
+      font-weight: 300;
       margin-top: 60px;
-      padding: 20px 40px;
+      padding: 20px 30px;
       font-size: 1rem;
       border-radius: 31px;
       border: 0px;
