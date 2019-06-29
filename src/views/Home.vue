@@ -22,17 +22,25 @@ export default {
   },
   data: function () {
     return {
-      anonNickname: storageService.get(consts.AnonNicknameStorageKey) || '',
+      anonNickname: storageService.get(consts.anonNicknameStorageKey) || '',
       disabled: false,
     }
   },
   watch: {
     anonNickname(newValue) {
-      storageService.set(consts.AnonNicknameStorageKey, newValue);
+      storageService.set(consts.anonNicknameStorageKey, newValue);
     }
   },
   methods: {
     handleCheckNeighbourhood() {
+      if (!this.canCheckNeighbourhood()) {
+        this.$notify({
+            group: 'main',
+            type: 'error',
+            text: 'Cannot perform neighbourhood check yet. Provide all required data.'
+        })
+        return;
+      }
       if (this.disabled) return;
       this.disabled = true;
       this.$notify({
@@ -52,6 +60,19 @@ export default {
           })
           this.disabled = false;
       }, 5000);
+    },
+
+    canCheckNeighbourhood() {
+      const requiredStorageItems = [
+        consts.anonNicknameStorageKey,
+        consts.yourNicknameStorageKey,
+        consts.yourSetStorageKey,
+      ].map(storageService.get);
+      for (const item of requiredStorageItems) {
+        console.log(item);
+        if (!item) return false;
+      }
+      return true;
     }
   }
 }

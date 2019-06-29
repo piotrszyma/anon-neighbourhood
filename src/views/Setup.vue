@@ -19,12 +19,12 @@ export default {
   },
   data() {
     return {
-      yourNickname: storageService.get(consts.YourNicknameStorageKey) || ''
+      yourNickname: storageService.get(consts.yourNicknameStorageKey) || ''
     }
   },
   watch: {
     yourNickname(newValue) {
-      storageService.set(consts.YourNicknameStorageKey, newValue);
+      storageService.set(consts.yourNicknameStorageKey, newValue);
     }
   }
 }
