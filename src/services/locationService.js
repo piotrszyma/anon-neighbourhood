@@ -47,4 +47,4 @@ function isNeighbourhood (yourSet, anonSet) {
 //   body['nickName'] = consts.YourNicknameStorageKey
 // }
 
-export { computeCoordinates, isNeighbourhood }
+export default { computeCoordinates, isNeighbourhood }

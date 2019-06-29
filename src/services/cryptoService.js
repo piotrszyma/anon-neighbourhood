@@ -10,14 +10,14 @@ function checkNumberOfMutualPoints (yourSet, anonSet) {
 
 function generateGSet () {
 
-    const gSet = storageService.get(consts.yourSetStorageKey)
+    let gSet = storageService.get(consts.yourSetStorageKey)
     // hash ???
 
     // pick random exponent
     const a = Math.random(GROUP_ORDER)
 
     // G = g ** a
-    const gSet = gSet.map(el => Math.pow(el, a));
+    gSet = gSet.map(el => Math.pow(el, a));
 
     return {gSet, a}
 }
