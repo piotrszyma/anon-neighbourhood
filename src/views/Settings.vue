@@ -2,9 +2,10 @@
   <div class="settings">
     <h1>Your Location</h1>
     <p>Setup your location (either device or your custom location)</p>
+
     <div class="form">
-      <inline-input label="Longitude" />
-      <inline-input label="Latitude" />
+      <inline-input @submit="update" label="Longitude" />
+      <inline-input @submit="update" label="Latitude" />
       <div class="checkbox">
         <input type="checkbox"/>use real values
       </div>
@@ -18,6 +19,11 @@ export default {
   name: 'settings',
   components: {
     InlineInput
+  },
+  methods: {
+    update() {
+      console.log('update')
+    }
   }
 }
 </script>
@@ -40,3 +46,4 @@ export default {
     text-align: center;
   }
 </style>
+
