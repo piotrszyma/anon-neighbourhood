@@ -4,7 +4,7 @@
     <div class="form">
       <inline-input v-model="anonNickname" label="Anon's nickname:" />
     </div>
-    <button @click="handleCheckNeighbourhood">Check neighbourhood</button>
+    <button :class="disabled ? 'disabled' : ''" @click="handleCheckNeighbourhood">Check neighbourhood</button>
   </div>
 </template>
 <script>
@@ -21,7 +21,8 @@ export default {
   },
   data: function () {
     return {
-      anonNickname: storageService.get(consts.AnonNicknameStorageKey) || ''
+      anonNickname: storageService.get(consts.AnonNicknameStorageKey) || '',
+      disabled: false,
     }
   },
   watch: {
@@ -31,11 +32,25 @@ export default {
   },
   methods: {
     handleCheckNeighbourhood() {
+      if (this.disabled) return;
+      this.disabled = true;
       this.$notify({
         group: 'main',
         text: 'Checking neighbourhood...',
         timeout: 1000,
       });
+
+      const isInNeighbourhood = false;
+
+      setTimeout(() => {
+          this.$notify({
+            group: 'main',
+            type: isInNeighbourhood ? 'success' : 'error',
+            text: isInNeighbourhood ? 'You are in neighbourhood with anon' : 'You are not in neighbourhood with anon',
+            timeout: 5000,
+          })
+          this.disabled = false;
+      }, 5000);
     }
   }
 }
@@ -73,6 +88,11 @@ export default {
       background-color: #62c397;
       color: white;
       box-shadow: 10px 10px 45px -10px rgba(0,0,0,0.31);
+    }
+
+    button.disabled {
+      background-color: #eeeeee;
+      cursor: wait;
     }
   }
 
