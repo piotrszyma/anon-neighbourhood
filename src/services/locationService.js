@@ -1,3 +1,5 @@
+import consts from '../consts'
+
 function computeCoordinates (latitude, longitude) {
   longitude = Math.floor(longitude)
   latitude = Math.ceil(latitude)
@@ -17,6 +19,10 @@ function computeCoordinates (latitude, longitude) {
   return coordinates
 }
 
+function isNeighbourhood () {
+
+}
+
 async function getLocation (nickname) {
   const url = ''
 
@@ -34,14 +40,14 @@ async function getLocation (nickname) {
   if (response.status === Response.ok) {
     return response.body['location']
   } else {
-
+consts
   }
   // fetch(url).then(/* … */)
 }
 
 async function setOwnLocation (latitude, longitude) {
   const body = computeCoordinates(latitude, longitude)
-  body['nickName'] = localStorage.getItem('nickName')
+  body['nickName'] = consts.YourNicknameStorageKey
 
   const url = 'https://anon-neighbour.firebaseio.com/positions/adam/piotr.json'
 
