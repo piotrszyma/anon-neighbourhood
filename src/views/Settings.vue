@@ -14,6 +14,7 @@
 </template>
 <script>
 import InlineInput from '../components/InlineInput.vue'
+import { getLocation, setOwnLocation } from '../services/locationService.js'
 
 export default {
   name: 'settings',
@@ -22,7 +23,7 @@ export default {
   },
   methods: {
     update() {
-      console.log('update')
+      setOwnLocation(1, 90)
     }
   }
 }

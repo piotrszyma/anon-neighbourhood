@@ -43,7 +43,7 @@ async function setOwnLocation (latitude, longitude) {
   const body = computeCoordinates(latitude, longitude)
   body['nickName'] = localStorage.getItem('nickName')
 
-  const url = 'https://anon-neighbour.firebaseio.com/rest/coordinates'
+  const url = 'https://anon-neighbour.firebaseio.com/positions/adam/piotr.json'
 
   const data = {
     method: 'POST',
@@ -52,10 +52,8 @@ async function setOwnLocation (latitude, longitude) {
     },
     body: JSON.stringify(body)
   }
-  await fetch(url, data)
-
-  // console.log("ruchanie")
-  // do some stuff
+  const response = await fetch(url, data)
+  console.log(response)
 }
 
 export { getLocation, setOwnLocation }
