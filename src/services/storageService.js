@@ -11,5 +11,5 @@ function set(name, value) {
 }
 
 export default {
-  set, get, getYourNickname, getAnonNickname,
+  set, get
 }
