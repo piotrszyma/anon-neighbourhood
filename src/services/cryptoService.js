@@ -1,17 +1,16 @@
-const GROUP_ORDER = 2137;
+import storageService from '../services/storageService'
+import consts from '../consts'
 
+const GROUP_ORDER = 1111;
 
-function privateSetIntersection (yourSet, anonSet) {
-
-
-    // const set = 
-    // generate G set
-    // const {gSet, a} = generateGS 
-
-    return numberOfMutualPoints
+function checkNumberOfMutualPoints (yourSet, anonSet) {
+    mutualSet = yourSet.filter(value => -1 !== anonSet.indexOf(value))
+    return mutualSet.length
 }
 
-function generateGSet (gSet) {
+function generateGSet () {
+
+    const gSet = storageService.get(consts.yourSetStorageKey)
     // hash ???
 
     // pick random exponent
@@ -23,8 +22,9 @@ function generateGSet (gSet) {
     return {gSet, a}
 }
 
-
 function generateASet (HSet) {
     const ASet = HSet.map(el => Math.pow(el, a));
     return ASet;
 }
+
+export default { checkNumberOfMutualPoints }

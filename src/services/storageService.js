@@ -13,11 +13,11 @@ function set(name, value) {
 }
 
 function getYourNickname() {
-  return get(consts.YourNicknameStorageKey);
+  return get(consts.yourNicknameStorageKey);
 }
 
 function getAnonNickname() {
-  return get(consts.AnonNicknameStorageKey);
+  return get(consts.anonNicknameStorageKey);
 }
 
 export default {

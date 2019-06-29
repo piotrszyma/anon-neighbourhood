@@ -18,6 +18,7 @@ import InlineInput from '../components/InlineInput.vue'
 import { getLocation, setOwnLocation } from '../services/locationService.js'
 import storageService from '../services/storageService';
 import consts from '../consts';
+import locationService from '../services/locationService.js'
 
 export default {
   name: 'settings',
@@ -33,16 +34,16 @@ export default {
     }
   },
   methods: {
-    update() {
-      setOwnLocation(1, 90)
-    },
     async updateLocation() {
       try {
-        const { latitude, longitude } = await browserService.getLocation();
+        latitude = "51.11"
+        longitude = "17.03" 
+        // const { latitude, longitude } = await browserService.getLocation();
         this.longitude = longitude;
         this.latitude = latitude;
-        storageService.set(consts.yourLatitudeStorageKey, latitude);
-        storageService.set(consts.yourLongitudeStorageKey, longitude);
+        // storageService.set(consts.yourLatitudeStorageKey, latitude);
+        // storageService.set(consts.yourLongitudeStorageKey, longitude);
+        storageService.set(consts.yourSetStorageKey, locationService.computeCoordinates(latitude, longitude));
       } catch (error) {
         console.error(error);
         this.$notify({

@@ -1,7 +1,9 @@
 export default {
-  YourNicknameStorageKey: 'yourNickname',
-  AnonNicknameStorageKey: 'anonNickname',
+  yourNicknameStorageKey: 'yourNickname',
+  anonNicknameStorageKey: 'anonNickname',
   useRealValuesStorageKey: 'useReal',
   yourLatitudeStorageKey: 'yourLatitudeStorageKey',
   yourLongitudeStorageKey: 'yourLatitudeStorageKey',
+  yourSetStorageKey: 'yourSet',
+  anonSetStorageKey: 'anonSet'
 }
