@@ -1,9 +1,10 @@
 <template>
   <div id="app">
+    <notifications group="main" position="bottom center"/>
     <div id="nav">
-      <router-link to="/">Home</router-link>
-      <router-link to="/setup">Setup</router-link>
-      <router-link to="/settings">Settings</router-link>
+      <router-link to="/">Neighbour</router-link>
+      <router-link to="/you">You</router-link>
+      <router-link to="/location">Location</router-link>
     </div>
     <transition name="fade">
       <keep-alive>

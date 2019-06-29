@@ -2,7 +2,6 @@
   <div class="input">
     <p>{{ label }}</p>
     <input :value="value" @input="handleInput"/>
-    <button @click="handleOk">OK</button>
   </div>
 </template>
 <script>

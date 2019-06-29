@@ -1,6 +1,6 @@
 <template>
   <div class="setup">
-    <h1>Bootstrap the app</h1>
+    <h1>Your nickname</h1>
     <div class="form">
       <inline-input v-model="yourNickname"  label="Your nickname:" />
     </div>

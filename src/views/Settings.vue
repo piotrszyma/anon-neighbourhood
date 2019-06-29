@@ -4,10 +4,10 @@
     <p>Setup your location (either device or your custom location)</p>
 
     <div class="form">
-      <inline-input @submit="update" label="Longitude" />
-      <inline-input @submit="update" label="Latitude" />
+      <inline-input v-model="longitude" @submit="update" label="Longitude" />
+      <inline-input v-model="latitude" @submit="update" label="Latitude" />
       <div class="checkbox">
-        <input type="checkbox"/>use real values
+        <input v-model="useRealValues" type="checkbox"/>use real values
       </div>
     </div>
   </div>
@@ -16,26 +16,73 @@
 import browserService from '../services/browserService.js';
 import InlineInput from '../components/InlineInput.vue'
 import { getLocation, setOwnLocation } from '../services/locationService.js'
+import storageService from '../services/storageService';
+import consts from '../consts';
 
 export default {
   name: 'settings',
   components: {
     InlineInput
   },
-  async created() {
-    try {
-      const { latitude, longitude } = await browserService.getLocation();
-      alert(`
-        Longitude: ${latitude}
-        Latitude: ${longitude}
-      `);
-    } catch (error) {
-      alert(error);
+  data: function() {
+    return {
+      longitude: "0",
+      latitude: "0",
+      useRealValues: storageService.get(consts.useRealValuesStorageKey) || true,
+      locationUpdater: () => {}
     }
   },
   methods: {
     update() {
       setOwnLocation(1, 90)
+    },
+    async updateLocation() {
+      try {
+        const { latitude, longitude } = await browserService.getLocation();
+        this.longitude = longitude;
+        this.latitude = latitude;
+        storageService.set(consts.yourLatitudeStorageKey, latitude);
+        storageService.set(consts.yourLongitudeStorageKey, longitude);
+      } catch (error) {
+        console.error(error);
+        this.$notify({
+          group: 'main',
+          type: 'warn',
+          title: 'Error when fetching location.',
+          text: error,
+          timeout: 5000,
+        });
+      }
+    },
+    startLocationUpdater() {
+      console.log('Starting location updater');
+      this.locationUpdater = setInterval(() => {
+        this.updateLocation();
+        this.$notify({
+          group: 'main',
+          text: 'Fetching location...',
+          timeout: 1000,
+        });
+        console.log('Fetching location...');
+      }, 5000);
+    },
+    stopLocationUpdater() {
+      console.log('Stoping location updater');
+      clearInterval(this.locationUpdater);
+    }
+  },
+  watch: {
+    useRealValues: {
+      immediate: true,
+      handler (shouldUseNow, wasUsingEarlier) {
+        console.log('Location updater setting changed into: ', shouldUseNow);
+        storageService.set(consts.useRealValuesStorageKey, shouldUseNow);
+        if (shouldUseNow && !wasUsingEarlier) {
+          this.startLocationUpdater();
+        } else if(!shouldUseNow && wasUsingEarlier) {
+          this.stopLocationUpdater();
+        }
+      }
     }
   }
 }
