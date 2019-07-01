@@ -1,6 +1,7 @@
 import storageService from '../services/storageService'
 import consts from '../consts'
 import firebaseService from '../services/firebaseService'
+import bigInt from 'big-integer'
 
 const GROUP_ORDER = 3267000013;//BigInt("282174488599599500573849980909");
 
@@ -8,19 +9,19 @@ const GROUP_ORDER = 3267000013;//BigInt("282174488599599500573849980909");
 function powerMod(base, power, modulo) {
   let x = base;
   let y = null;
-  if (power % BigInt(2) == BigInt(1)) {
+  if (power % bigInt(2) == bigInt(1)) {
     y = base;
   } else {
-    y = BigInt(1);
+    y = bigInt(1);
   }
-  let n_prim = power / BigInt(2);
+  let n_prim = power / bigInt(2);
 
-  while (n_prim > BigInt(0)) {
-    x = (x ** BigInt(2)) % modulo;
-    if (n_prim % BigInt(2) == BigInt(1)) {
-      y = y === BigInt(1) ? x : (y * x) % modulo;
+  while (n_prim > bigInt(0)) {
+    x = (x ** bigInt(2)) % modulo;
+    if (n_prim % bigInt(2) == bigInt(1)) {
+      y = y === bigInt(1) ? x : (y * x) % modulo;
     }
-    n_prim = n_prim / BigInt(2);
+    n_prim = n_prim / bigInt(2);
   }
   return y;
 }
@@ -37,7 +38,7 @@ function getOrCreateEphemeralValue () {
 }
 
 function powerModEachElement(set, power) {
-  return set.map(element => Number(powerMod(BigInt(element), BigInt(power), BigInt(GROUP_ORDER))));
+  return set.map(element => Number(powerMod(bigInt(element), bigInt(power), bigInt(GROUP_ORDER))));
 }
 
 function encodeYourSet(set, privateKey) {
