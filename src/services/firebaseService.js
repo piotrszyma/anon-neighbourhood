@@ -12,7 +12,10 @@ function performCommunication (numberOfRetries, func, ...args) {
 async function sendPartialSet (whoGenerated, forWhom, set) {
     const data = { set }
     const url = `https://anon-neighbour.firebaseio.com/partial-positions/${whoGenerated}/${forWhom}.json`
+    console.log(`[PARTIAL SEND] ${whoGenerated} sends to ${forWhom}`)
+
     const response = await sendSet(url, data)
+    console.log(`[PARTIAL SEND RESPONSE] ${response}`)
     return response;
 }
 
@@ -26,7 +29,7 @@ async function sendFullSet (whoGenerated, forWhom, set) {
 async function getPartialSet (whoGenerated, forWhom) {
     const url = `https://anon-neighbour.firebaseio.com/partial-positions/${whoGenerated}/${forWhom}.json`
     const data = await getSet(url)
-    if (!data) throw Error("Anon did not calculated his PartialSet yet.");
+    if (!data) throw Error("Anon did not calculate his PartialSet yet.");
     // Get last returned data....
     return data.set
 }
@@ -34,7 +37,7 @@ async function getPartialSet (whoGenerated, forWhom) {
 async function getFullSet (whoGenerated, forWhom) {
     const url = `https://anon-neighbour.firebaseio.com/positions/${whoGenerated}/${forWhom}.json`
     const data = await getSet(url)
-    if (!data) throw Error("Anon did not calculated your FullSet yet.");
+    if (!data) throw Error("Anon did not calculate your FullSet yet.");
     // Get last returned data....
     return data.set
 }

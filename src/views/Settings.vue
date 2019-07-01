@@ -39,6 +39,7 @@ export default {
     async updateLocation() {
       try {
         const { latitude, longitude } = await browserService.getLocation();
+        // debugger;
         this.longitude = longitude;
         this.latitude = latitude;
         storageService.set(consts.yourLatitudeStorageKey, latitude);

@@ -65,7 +65,7 @@ async function updateYourPartialSet() {
   // Encode yourSet with privkey
   const privateKey = getOrCreateEphemeralValue();
   const yourPartialSet = encodeYourSet(yourSet, privateKey);
-
+  // TODO: the problem lies in the line above - there is an error during converting BigInt <-> value
   console.log('yourPartialSet', yourPartialSet);
   // Send yourPartialSet set to anon.
   await firebaseService.sendPartialSet(yourNickname, anonNickname, yourPartialSet)
