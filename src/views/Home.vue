@@ -68,7 +68,7 @@ export default {
           timeout: 5000,
         })
       } catch (error) {
-          console.error(error);
+          console.log(error.message);
           this.$notify({
             group: 'main',
             type:'error',

@@ -47,7 +47,7 @@ export default {
         storageService.set(consts.yourSetStorageKey, locationService.computeCoordinates(latitude, longitude));
         cryptoService.updateYourPartialSet();
       } catch (error) {
-        console.error(error);
+        console.log(error.message);
         this.$notify({
           group: 'main',
           type: 'warn',

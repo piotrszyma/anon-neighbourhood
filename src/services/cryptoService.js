@@ -5,30 +5,40 @@ import bigInt from 'big-integer'
 
 const GROUP_ORDER = 3267000013;//BigInt("282174488599599500573849980909");
 
+const _2 = bigInt(2);
+const _1 = bigInt(1);
+const _0 = bigInt(0);
 
 function powerMod(base, power, modulo) {
-  let x = base;
+  let x = bigInt(base);
+  power = bigInt(power);
+  modulo = bigInt(modulo);
   let y = null;
-  if (power % bigInt(2) == bigInt(1)) {
+  if (power.mod(_2).equals(_1)) {
     y = base;
   } else {
-    y = bigInt(1);
+    y = _1;
   }
-  let n_prim = power / bigInt(2);
+  let n_prim = power.divide(_2);
 
-  while (n_prim > bigInt(0)) {
-    x = (x ** bigInt(2)) % modulo;
-    if (n_prim % bigInt(2) == bigInt(1)) {
-      y = y === bigInt(1) ? x : (y * x) % modulo;
+  while (n_prim.gt(_0)) {
+    x = x.pow(_2).mod(modulo);
+    if (n_prim.mod(_2).equals(_1)) {
+      if (y.equals(_1)) {
+        y = x;
+      } else {
+        y = y.times(x).mod(modulo);
+      }
+
     }
-    n_prim = n_prim / bigInt(2);
+    n_prim = n_prim.divide(_2);
   }
   return y;
 }
 
 function generateEphemeralValue () {
-  let a
-  while (a != 1) {
+  let a = 1;
+  while (a == 1) {
     a = Math.floor(Math.random() * GROUP_ORDER)
   }
   storageService.set(consts.yourEphemeralValueStorageKey, a)
@@ -63,6 +73,8 @@ async function updateYourPartialSet() {
   const yourNickname =  storageService.get(consts.yourNicknameStorageKey)
   const anonNickname = storageService.get(consts.anonNicknameStorageKey);
 
+  console.log('yourSet', storageService.get(consts.yourSetStorageKey));
+
   const yourSet  = Object.values(storageService.get(consts.yourSetStorageKey));
 
   // Encode yourSet with privkey
@@ -88,7 +100,7 @@ async function updateAnonFullSet() {
     const anonPartialSet = await firebaseService.getPartialSet(anonNickname, yourNickname);
     const anonPartialSetStringified = JSON.stringify(anonPartialSet);
 
-    console.log('anonPartialSet', anonPartialSet);
+    console.log('updateAnonFullSet -> anonPartialSet', anonPartialSet);
 
     if (anonPartialSetStringified === ANON_PARTIAL_SET_STRINGIFIED_CACHE) return;
     console.log('Need to update anonFullSet... updating!');
@@ -116,7 +128,7 @@ async function checkNumberOfMutualPoints () {
     // Get yourFullSet from anon.
     const yourFullSet = await firebaseService.getFullSet(anonNickname, yourNickname);
 
-    console.log('anonFullSet', yourFullSet);
+    console.log('yourFullSet', yourFullSet);
 
     if (!LAST_GENERATED_ANON_FULL_SET) await updateAnonFullSet();
     const anonFullSet = LAST_GENERATED_ANON_FULL_SET;
