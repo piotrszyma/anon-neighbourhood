@@ -8,21 +8,19 @@ const GROUP_ORDER = 3267000013;//BigInt("282174488599599500573849980909");
 function powerMod(base, power, modulo) {
   let x = base;
   let y = null;
-  if (power % BigInt(2n) == BigInt(1n)) {
+  if (power % BigInt(2) == BigInt(1)) {
     y = base;
   } else {
-    y = BigInt(1n);
+    y = BigInt(1);
   }
-  let n_prim = power / BigInt(2n);
+  let n_prim = power / BigInt(2);
 
   while (n_prim > BigInt(0)) {
-    x = (x ** BigInt(2n)) % modulo;
-    if (n_prim % BigInt(2n) == BigInt(1n)) {
-      y = y === BigInt(1n) ? x : (y * x) % modulo;
+    x = (x ** BigInt(2)) % modulo;
+    if (n_prim % BigInt(2) == BigInt(1)) {
+      y = y === BigInt(1) ? x : (y * x) % modulo;
     }
-
-    n_prim = n_prim / BigInt(2n);
-
+    n_prim = n_prim / BigInt(2);
   }
   return y;
 }
