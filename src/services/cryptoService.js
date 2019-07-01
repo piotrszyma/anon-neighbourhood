@@ -26,9 +26,11 @@ function powerMod(base, power, modulo) {
   return y;
 }
 
-
 function generateEphemeralValue () {
-  const a = Math.floor(Math.random() * GROUP_ORDER)
+  let a
+  while (a != 1) {
+    a = Math.floor(Math.random() * GROUP_ORDER)
+  }
   storageService.set(consts.yourEphemeralValueStorageKey, a)
   return a
 }
@@ -66,8 +68,9 @@ async function updateYourPartialSet() {
   // Encode yourSet with privkey
   const privateKey = getOrCreateEphemeralValue();
   const yourPartialSet = encodeYourSet(yourSet, privateKey);
-  // TODO: the problem lies in the line above - there is an error during converting BigInt <-> value
+
   console.log('yourPartialSet', yourPartialSet);
+
   // Send yourPartialSet set to anon.
   await firebaseService.sendPartialSet(yourNickname, anonNickname, yourPartialSet)
 }
@@ -116,13 +119,8 @@ async function checkNumberOfMutualPoints () {
     console.log('anonFullSet', yourFullSet);
 
     if (!LAST_GENERATED_ANON_FULL_SET) await updateAnonFullSet();
-
     const anonFullSet = LAST_GENERATED_ANON_FULL_SET;
-
-    // Return
     return getNumberOfMutualPoints(yourFullSet, anonFullSet);
 }
-
-
 
 export default { checkNumberOfMutualPoints, updateYourPartialSet, updateAnonFullSet }

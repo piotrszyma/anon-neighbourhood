@@ -4,8 +4,8 @@
     <p>Setup your location (either device or your custom location)</p>
 
     <div class="form">
-      <inline-input v-model="longitude" label="Longitude" />
       <inline-input v-model="latitude" label="Latitude" />
+      <inline-input v-model="longitude" label="Longitude" />
       <div class="checkbox">
         <input v-model="useRealValues" type="checkbox"/>use real values
       </div>

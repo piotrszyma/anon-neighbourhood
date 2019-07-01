@@ -44,6 +44,4 @@ async function getLocation() {
   }, 2500);
 }
 
-export default {
-  getLocation,
-}
+export default { getLocation }
