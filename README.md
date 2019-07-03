@@ -1,29 +1,11 @@
-# anon-neighbourhood
+# Anon's neighbourhood.
 
-## Project setup
-```
-yarn install
-```
+MVP of an application that tells user if his in neighbour of some other user, without revealing his exact location using Privacy Set Intersection algorithm.
 
-### Compiles and hot-reloads for development
-```
-yarn run serve
-```
+### Motivations
 
-### Compiles and minifies for production
-```
-yarn run build
-```
+This project was created for Cryptography laboratory classes, Summer Semester 2019.
 
-### Run your tests
-```
-yarn run test
-```
+### How to build
 
-### Lints and fixes files
-```
-yarn run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+You need to setup a VueJS development environment to build the web app and Firebase application to setup communication between parties. Application relies on Geolocation API of a browser -- serve the app with HTTPS.
